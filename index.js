@@ -1,10 +1,21 @@
 // import ancientsData from "./data/ancients";
+console.log('правильная схема только у азатота');
+const ancients = document.querySelectorAll('.ancient')
+// console.log(ancients);
 const azathoth = document.querySelector('.ancient-card-1');
+const cthulthu = document.querySelector('.ancient-card-2');
+const iogsothoth = document.querySelector('.ancient-card-3');
+const shubNiggurath = document.querySelector('.ancient-card-4')
+ancients.forEach(item => item.addEventListener('click', function(e){ 
+    ancients.forEach(el => el.classList.remove('checked-antiont'))   
+    item.classList.add('checked-antiont');
+    
+}))
+// function checkAnciont(item) {
+//     item.classList.add('checked-antiont')
+// }
 
-function checkAnciont() {
-    azathoth.classList.add('checked-antiont')
-}
-azathoth.addEventListener('click', checkAnciont);
+// azathoth.addEventListener('click', checkAnciont);
 
 const medium = document.querySelector('.medium');
 
@@ -24,7 +35,7 @@ let greenArr = [];
 
 function getGreenCards(){
     for (let i = 0; i < 5; i++){
-        let cardNumG = getRandomNum(18) ;
+        let cardNumG = getRandomNum(17) + 1 ;
         if (greenArr.includes(cardNumG)){
             i--
         } else greenArr.push(cardNumG)
@@ -33,7 +44,7 @@ function getGreenCards(){
 
 function getBrownCards(){
     for (let i = 0; i < 9; i++){
-        let cardNumBr = getRandomNum(21) ;
+        let cardNumBr = getRandomNum(20) + 1 ;
         if (brownArr.includes(cardNumBr)){
             i--
         } else brownArr.push(cardNumBr)
@@ -41,8 +52,8 @@ function getBrownCards(){
 }
 function getBlueCards(){
     for (let i = 0; i < 2; i++){
-        let cardNumBl = getRandomNum(12);
-        console.log(cardNumBl);
+        let cardNumBl = getRandomNum(11) + 1;
+        // console.log(cardNumBl);
         if (blueArr.includes(cardNumBl)){
             i--
         } else blueArr.push(cardNumBl)
@@ -60,30 +71,30 @@ const srcGreen = []
 const srcBrown = []
 const srcBlue = []
 
-const greenLink = 'https://raw.githubusercontent.com/Luffi2539/eldritch-codejam/main/assets/MythicCards/green/'
+const cardLink = 'https://raw.githubusercontent.com/Luffi2539/eldritch-codejam/main/assets/MythicCards/'
 
 function setGreenCards(){
     getGreenCards();
     for (let i = 0; i < greenArr.length; i++){
-        srcGreen.push(`${greenLink}green${greenArr[i]}.png`)
+        srcGreen.push(`${cardLink}green/green${greenArr[i]}.png`)
     }
 }
 
 function setBrownCards(){
     getBrownCards();
     for (let i = 0; i < brownArr.length; i++){
-        srcBrown.push(`https://raw.githubusercontent.com/Luffi2539/eldritch-codejam/main/assets/MythicCards/brown/brown${brownArr[i]}.png`)
+        srcBrown.push(`${cardLink}brown/brown${brownArr[i]}.png`)
     }
 }
 function setBlueCards(){
     getBlueCards();
-    console.log(blueArr.length);
-    console.log(blueArr);
+    // console.log(blueArr.length);
+    // console.log(blueArr);
 
     for (let i = 0; i < blueArr.length; i++){
-        srcBlue.push(`https://raw.githubusercontent.com/Luffi2539/eldritch-codejam/main/assets/MythicCards/blue/blue${blueArr[i]}.png`)
+        srcBlue.push(`${cardLink}blue/blue${blueArr[i]}.png`)
     }
-    console.log(srcBlue);
+    // console.log(srcBlue);
 
 }
 const stages = {
@@ -118,15 +129,20 @@ function setCards() {
     setGreenCards();
     setBrownCards();
     setBlueCards();
-    console.log('click');
-    console.log(srcGreen);
+    // console.log('click');
+    // console.log(srcGreen);
 }
 
-let flatStage1 = []
-const stage1 = [];
+    let flatStage1 = []
+    let flatStage2 = []
+    let flatStage3 = []
+    const stage1 = [];
     const stage2 = [];
     const stage3 = [];
 function mixCards() {
+
+
+  
     setCards()
     const greenSt1 = [];
     const greenSt2 = [];
@@ -208,69 +224,75 @@ function mixCards() {
         }
     }
 
-    stage1.push(greenSt1, brownSt1, blueSt1)
-    flatStage1 = stage1.flat(1)
-    console.log(stage1);
-    console.log(flatStage1);
-
-// console.log(brownArr);
-// console.log(brownSt1);
-// console.log(brownSt2);
-// console.log(brownSt3);
-
-    
-
+    stage1.push(greenSt1, brownSt1, blueSt1);
+    stage2.push(greenSt2, brownSt2, blueSt2);
+    stage3.push(greenSt3, brownSt3, blueSt3);
+    flatStage1 = stage1.flat(1);
+    flatStage2 = stage2.flat(1);
+    flatStage3 = stage3.flat(1);
+//     console.log(flatStage1);
+//     console.log(srcBlue);
+// console.log(greenSt2, brownSt2, blueSt2);
+//     console.log(flatStage2.length);
+// console.log(flatStage3);
 }
 
-console.log(flatStage1);
+
+
 
 const card = document.querySelector('.cards');
 const deck = document.querySelector('.deck');
 
+let arr = []
+
 function openCard() {
     // for(let i = 0; i < flatStage1.length; i++){
-    
+    if (flatStage1.length > 0 && arr.length < 4){
+        
+        incr()
 
-const img = new Image();
-  
-img.src = `${flatStage1[ind-1]}`
-    
+        const img = new Image();
+        img.src = `${flatStage1[ind-1]}`
+        card.style.backgroundImage = `url(${img.src})`;
+        arr.push(flatStage1[ind-1])
+        // console.log('open');
+    // ind = 0
+    } else if (flatStage2.length > 0 && arr.length < 10) {
+        incr()
+        console.log(ind);
+        const img = new Image();
+        img.src = `${flatStage2[ind-5]}`
+        card.style.backgroundImage = `url(${img.src})`;
+        arr.push(flatStage2[ind-5])
+        console.log(flatStage2[ind-4]);
+        // console.log('open2');
+    } else if (ind < 16)  {
+        incr()
+        const img = new Image();
+        img.src = `${flatStage3[ind-11]}`
+        card.style.backgroundImage = `url(${img.src})`;
+        arr.push(flatStage3[ind-11])
+        // console.log('open3');
+    } else {
+        const img = new Image();
 
-    //     // img.onload = () => {      
-    //     //     card.style.backgroundImage = `url(${img.src})`;
-    //     // }; 
-    card.style.backgroundImage = `url(${img.src})`;
+                img.src = `${flatStage3[16]}`
 
-    // }
-        console.log('open');
-    
+        card.style.backgroundImage = `url(${img.src})`;
+
+        // console.log('end');
+    }
+   
+//     deck.onclick = function(){
+//         ind += 1;
+//         console.log(ind)}
 }
-let ind = 0;  
-   deck.onclick = function(e){
-  ind += 1;
-  console.log(ind)}
-// function getNextCard(){
-//     openCard()
-//     let ind = 0;  
-//    deck.onclick = function(e){
-//   count += 1;
-//   console.log(count)
-// }
-//     const img = new Image();
-// let i = 0
-//     img.src = `${flatStage1[i++]}`
-//     card.style.backgroundImage = `url(${img.src})`;
+let ind = 0
 
+   function incr() {
+        ind += 1;
+        // console.log(ind) 
+   }  
 
-    
-// }
-
-
-// deck.onclick = function() {
-//     let count = 0
-//    ++count;
-//     console.log(count);
-// }
-medium.addEventListener('click', mixCards);
-// deck.addEventListener('click', getNextCard)
 deck.addEventListener('click', openCard)
+medium.addEventListener('click', mixCards);
